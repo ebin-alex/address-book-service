@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Book</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📇 Address Book</h1>
+            <button id="newContactBtn" class="btn btn-primary">+ New Contact</button>
+        </header>
+
+        <!-- Search and Filter Section -->
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="Search by name, email, or phone..." class="search-input">
+            <input type="text" id="tagFilter" placeholder="Filter by tag..." class="search-input">
+            <button id="searchBtn" class="btn btn-secondary">Search</button>
+            <button id="clearBtn" class="btn btn-secondary">Clear</button>
+        </div>
+
+        <!-- Contact Form Modal -->
+        <div id="contactModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">New Contact</h2>
+                <form id="contactForm">
+                    <input type="hidden" id="contactId">
+                    
+                    <label>Name *</label>
+                    <input type="text" id="name" required>
+                    
+                    <label>Email</label>
+                    <input type="email" id="email">
+                    
+                    <label>Phone</label>
+                    <input type="text" id="phone">
+                    
+                    <div id="phoneNumbersContainer">
+                        <label>Additional Phone Numbers</label>
+                        <div id="phoneNumbersList"></div>
+                        <button type="button" class="btn btn-small" onclick="addPhoneNumber()">+ Add Phone</button>
+                    </div>
+                    
+                    <div id="addressesContainer">
+                        <label>Addresses</label>
+                        <div id="addressesList"></div>
+                        <button type="button" class="btn btn-small" onclick="addAddress()">+ Add Address</button>
+                    </div>
+                    
+                    <div id="tagsContainer">
+                        <label>Tags (comma-separated)</label>
+                        <input type="text" id="tags" placeholder="friend, work, family">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contacts List -->
+        <div class="contacts-section">
+            <div class="pagination-controls">
+                <button id="prevBtn" class="btn btn-small">Previous</button>
+                <span id="pageInfo">Page 1 of 1</span>
+                <button id="nextBtn" class="btn btn-small">Next</button>
+                <select id="pageSize">
+                    <option value="10">10 per page</option>
+                    <option value="20">20 per page</option>
+                    <option value="50">50 per page</option>
+                </select>
+            </div>
+
+            <div id="contactsList" class="contacts-list">
+                <!-- Contacts will be loaded here -->
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
