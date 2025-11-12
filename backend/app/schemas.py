@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field, validator
+from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from typing import List, Optional
 from datetime import datetime
 
@@ -11,8 +11,7 @@ class PhoneNumberCreate(PhoneNumberBase):
 class PhoneNumberResponse(PhoneNumberBase):
     id: int
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class AddressBase(BaseModel):
     address: str = Field(..., min_length=1, max_length=500)
@@ -23,8 +22,7 @@ class AddressCreate(AddressBase):
 class AddressResponse(AddressBase):
     id: int
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class TagBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=50)
@@ -35,8 +33,7 @@ class TagCreate(TagBase):
 class TagResponse(TagBase):
     id: int
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ContactBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=200)
@@ -62,8 +59,7 @@ class ContactResponse(ContactBase):
     addresses: List[AddressResponse] = []
     tags: List[TagResponse] = []
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ContactListResponse(BaseModel):
     contacts: List[ContactResponse]

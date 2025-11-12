@@ -2,13 +2,22 @@ from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import Optional
+from contextlib import asynccontextmanager
 from . import crud, schemas, models
 from .database import get_db, init_db
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize database on startup
+    init_db()
+    yield
+    # Cleanup on shutdown (if needed)
 
 app = FastAPI(
     title="Address Book API",
     description="REST API for managing contacts",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan
 )
 
 # CORS middleware for frontend access
@@ -19,11 +28,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Initialize database on startup
-@app.on_event("startup")
-def startup_event():
-    init_db()
 
 @app.get("/")
 def root():
